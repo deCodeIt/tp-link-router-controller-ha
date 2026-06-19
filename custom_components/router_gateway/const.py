@@ -1,0 +1,19 @@
+DOMAIN = "router_gateway"
+
+CONF_ROUTER_IP = "router_ip"
+CONF_ROUTER_PASSWORD = "router_password"
+CONF_ISP_ENTITY = "isp_entity"
+CONF_DHCP_GATEWAY = "dhcp_gateway"
+CONF_SOURCE_ENTITY = "source_entity"
+
+DEFAULT_ROUTER_IP = "192.168.1.1"
+
+STATUS_IDLE = "idle"
+STATUS_LOGGING_IN = "logging_in"
+STATUS_READING_LAN = "reading_lan_config"
+STATUS_UPDATING_LAN = "updating_lan_gateway"
+STATUS_WAITING_ROUTER = "waiting_for_router"
+STATUS_READING_DHCP = "reading_dhcp_config"
+STATUS_UPDATING_DHCP = "updating_dhcp_gateway"
+STATUS_SUCCESS = "success"
+STATUS_FAILED = "failed"

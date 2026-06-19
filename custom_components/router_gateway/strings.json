@@ -1,0 +1,30 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "TP-Link Router Controller",
+        "description": "Configure your TP-Link router for automatic gateway switching.",
+        "data": {
+          "router_ip": "Router IP Address",
+          "router_password": "Admin Password",
+          "source_entity": "Gateway Source Entity",
+          "dhcp_gateway": "DHCP Default Gateway (optional)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to router: {error_detail}"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Router Gateway Settings",
+        "data": {
+          "source_entity": "Gateway Source Entity",
+          "dhcp_gateway": "DHCP Default Gateway (optional)"
+        }
+      }
+    }
+  }
+}
