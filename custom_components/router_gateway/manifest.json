@@ -6,6 +6,6 @@
   "documentation": "https://github.com/deCodeIt/tp-link-router-controller-ha",
   "iot_class": "local_polling",
   "requirements": ["tplinkrouterc6u>=5.0.0"],
-  "version": "0.1.0",
+  "version": "0.2.0",
   "integration_type": "hub"
 }

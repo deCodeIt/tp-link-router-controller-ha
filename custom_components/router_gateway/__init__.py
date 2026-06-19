@@ -5,13 +5,17 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.event import async_track_state_change_event
 
+import ipaddress
+
 from .const import (
     CONF_DHCP_GATEWAY,
     CONF_ROUTER_IP,
     CONF_ROUTER_PASSWORD,
     CONF_SOURCE_ENTITY,
     DOMAIN,
+    STATUS_FAILED,
     STATUS_IDLE,
+    STATUS_INVALID_IP,
 )
 from .tplink_client import TPLinkGatewayClient
 
@@ -57,6 +61,16 @@ async def apply_gateway(hass: HomeAssistant, entry: ConfigEntry, gateway_ip: str
         _LOGGER.info("Update in progress, queued gateway %s", gateway_ip)
         return
 
+    try:
+        ipaddress.ip_address(gateway_ip)
+    except ValueError:
+        _LOGGER.error("Invalid IP received: %s", gateway_ip)
+        domain_data["status"] = STATUS_INVALID_IP
+        hass.bus.async_fire(f"{DOMAIN}_status_update", {"entry_id": entry.entry_id})
+        domain_data["status"] = STATUS_FAILED
+        hass.bus.async_fire(f"{DOMAIN}_status_update", {"entry_id": entry.entry_id})
+        return
+
     async with lock:
         while True:
             if gateway_ip == domain_data["last_applied_gateway"]:
@@ -78,6 +92,7 @@ async def apply_gateway(hass: HomeAssistant, entry: ConfigEntry, gateway_ip: str
                 domain_data["last_applied_gateway"] = gateway_ip
 
             domain_data["status"] = STATUS_IDLE
+            hass.bus.async_fire(f"{DOMAIN}_status_update", {"entry_id": entry.entry_id})
 
             pending = domain_data.get("pending_gateway")
             domain_data["pending_gateway"] = None
